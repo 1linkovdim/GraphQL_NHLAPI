@@ -37,13 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'NHL_GraphQL.GraphQL_NHL',
+    'GraphQL_NHL',
     'graphene_django'
 ]
 
-GRAPHENE = {
-    'SCHEMA': 'GraohQL_NHL.graphql'
-}
+# GRAPHENE = {
+#     'SCHEMA': 'GraphQL_NHL.graphql'
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

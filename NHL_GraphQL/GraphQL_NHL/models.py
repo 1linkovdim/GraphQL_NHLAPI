@@ -2,8 +2,8 @@ from django.db import models
 
 class Conference(models.Model):
     name = models.CharField(max_length=100)
-    teams = models.ForeignKey(Team, on_delete=models.PROTECT)
-    divisions = models.ForeignKey(Division, on_delete=models.PROTECT)
+    teams = models.ForeignKey('Team', on_delete=models.PROTECT, related_name='+')
+    divisions = models.ForeignKey('Division', on_delete=models.PROTECT, related_name='+')
 
     def __str__(self):
         return self.name
@@ -18,7 +18,7 @@ class Venue(models.Model):
 
 class Division(models.Model):
     name = models.CharField(max_length=100)
-    teams = models.ForeignKey(Team, on_delete=models.PROTECT)
+    teams = models.ForeignKey('Team', on_delete=models.PROTECT, related_name='+')
     conference = models.ForeignKey(Conference, on_delete=models.PROTECT)
 
     def __str__(self):
@@ -36,8 +36,8 @@ class Team(models.Model):
     conference = models.ForeignKey(Conference, on_delete=models.PROTECT)
     official_site_url = models.CharField(max_length=100)
     active = models.BooleanField()
-    current_roster = models.OneToOneField(Roster, on_delete=models.PROTECT)
-    all_rosters = models.ForeignKey(Roster, on_delete=models.PROTECT)
+    current_roster = models.OneToOneField('Roster', on_delete=models.PROTECT, related_name='+')
+    all_rosters = models.ForeignKey('Roster', on_delete=models.PROTECT, related_name='+')
 
     def __str__(self):
         return self.name
@@ -61,7 +61,7 @@ class Player(models.Model):
     rookie = models.BooleanField()
     shoots_catches = models.CharField(max_length=5)
     on_current_roster = models.BooleanField()
-    current_roster = models.ForeignKey(Roster, on_delete=models.PROTECT)
+    current_roster = models.ForeignKey('Roster', on_delete=models.PROTECT)
 
     LEFT_WING = 'LW'
     RIGHT_WING = 'RW'
@@ -77,13 +77,13 @@ class Player(models.Model):
         (RIGHT_DEFENSE, 'Right Defense'),
         (GOALIE, 'Goalie')
     ]
-    position = models.CharField(max_length=50, choice=POSITION_CHOICES)
+    position = models.CharField(max_length=50, choices=POSITION_CHOICES)
 
-    aggregate_stats = models.OneToOneField(Statline, on_delete=models.PROTECT)
-    all_stats = models.ForeignKey(Statline, on_delete=models.PROTECT)
+    aggregate_stats = models.OneToOneField('Statline', on_delete=models.PROTECT, related_name='+')
+    all_stats = models.ForeignKey('Statline', on_delete=models.PROTECT, related_name='+')
 
     def __str__(self):
-        return self.name
+        return self.full_name
 
 class Statline(models.Model):
     player = models.ForeignKey(Player, models.PROTECT)
@@ -97,18 +97,18 @@ class Statline(models.Model):
     games = models.IntegerField()
     power_play_goals = models.IntegerField()
     power_play_points = models.IntegerField()
-    shot_percentage = models.DecimalField()
+    shot_percentage = models.DecimalField(decimal_places=2, max_digits=5)
     game_winning_goals = models.IntegerField()
     shorthanded_goals = models.IntegerField()
     shorthanded_points = models.IntegerField()
 
     def __str__(self):
-        return self.name
+        return ""
 
 
 class Roster(models.Model):
     year = models.CharField(max_length=10)
-    team = models.ForeignKey(Team, on_delete=models.PROTECT)
+    team = models.ForeignKey(Team, on_delete=models.PROTECT, related_name='+')
     players = models.ForeignKey(Player, on_delete=models.PROTECT)
     
     def __str__(self):
