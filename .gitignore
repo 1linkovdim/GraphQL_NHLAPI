@@ -1,0 +1,4 @@
+*.log
+*.sql
+*.sqlite3
+env/*
