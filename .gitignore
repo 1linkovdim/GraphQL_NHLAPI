@@ -1,4 +1,6 @@
 *.log
 *.sql
 *.sqlite3
-env/*
+NHL_GraphQL/env/*
+NHL_GraphQL/.vscode/*
+**/__pychache__/
