@@ -3,4 +3,4 @@
 *.sqlite3
 NHL_GraphQL/env/*
 NHL_GraphQL/.vscode/*
-**/__pychache__/
+**/__pycache__/
