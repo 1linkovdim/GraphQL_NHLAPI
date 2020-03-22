@@ -1,5 +1,5 @@
 import graphene
-from .models import Player, Team, Conference, Division, Venue, Statline, Roster
+from GraphQL_NHL.models import Player, Team, Conference, Division, Venue, Statline, Roster
 from graphene_django.types import DjangoObjectType
 
 class PlayerType(DjangoObjectType):
